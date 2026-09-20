@@ -3,7 +3,13 @@
   "redirects": [
     {
       "source": "/register.html",
-      "destination": "https://register.finflare.online",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.finflare.online"
+        }
+      ],
+      "destination": "https://finflare.online",
       "permanent": false
     }
   ]
