@@ -496,14 +496,31 @@ button:hover{border-color:var(--gold-dim);color:var(--gold)}
   background:rgba(212,175,55,0.05);
   border:1px solid rgba(212,175,55,0.3);
   border-radius:10px;
-  padding:16px 20px;
+  padding:22px 20px;
   text-align:center;
   display:flex;
   flex-direction:column;
   align-items:center;
   justify-content:center;
-  gap:4px;
+  gap:8px;
   font-family:var(--font-b);
+}
+.upi-qr-wrap{
+  background:#ffffff;
+  padding:10px;
+  border-radius:12px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  box-shadow:0 4px 18px rgba(0,0,0,0.35);
+  margin-bottom:6px;
+}
+.upi-qr-img{
+  width:165px;
+  height:165px;
+  display:block;
+  object-fit:contain;
+  border-radius:4px;
 }
 .pay-upi-strip .upi-lbl{
   font-family:var(--font-b);
@@ -1273,21 +1290,34 @@ footer .foot-logos img{height:28px;width:auto}
 }
 .team-notice-popup{
   display:none;
-  align-items:flex-start;
+  align-items:center;
   gap:10px;
   margin-top:8px;
-  padding:11px 14px;
-  background:rgba(212,175,55,0.09);
-  border:1px solid rgba(212,175,55,0.38);
-  border-radius:8px;
+  padding:10px 14px;
+  background:rgba(255,255,255,0.04);
+  border:1px solid rgba(243,237,224,0.18);
+  border-left:3px solid var(--gold);
+  border-radius:6px;
   font-size:.82rem;
-  color:var(--cream);
+  color:var(--cream-dim);
   line-height:1.45;
-  box-shadow:0 4px 16px rgba(0,0,0,0.3);
   animation:noticePop .22s ease-out;
 }
-.team-notice-popup b{
+.team-notice-popup .note-tag{
+  display:inline-block;
+  font-family:var(--font-b);
+  font-size:.70rem;
+  font-weight:700;
+  text-transform:uppercase;
+  letter-spacing:.08em;
+  background:rgba(212,175,55,0.15);
   color:var(--gold);
+  padding:2px 8px;
+  border-radius:4px;
+  flex-shrink:0;
+}
+.team-notice-popup b{
+  color:var(--cream);
   font-weight:600;
 }
 @keyframes noticePop{
@@ -1375,8 +1405,8 @@ footer .foot-logos img{height:28px;width:auto}
           <span class="lbl">Team Name <i>*</i></span>
           <input type="text" id="stuTeam" placeholder="Team name (or NA for individual events)" autocomplete="off">
           <div id="stuTeamNotice" class="team-notice-popup">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--gold);flex-shrink:0;margin-top:2px"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
-            <span id="stuTeamNoticeText">This event requires <b id="stuTeamCountReq">2</b> amount of teammate(s), ensure that your teammate(s) are also registering, separately.</span>
+            <span class="note-tag">Note</span>
+            <span id="stuTeamNoticeText">This event requires a team of <b id="stuTeamCountReq">2</b> members. Please ensure your teammate(s) also register separately with this same team name.</span>
           </div>
           <span id="stuTeamHint" style="display:none; font-size:.78rem; color:var(--muted); margin-top:6px;"></span>
         </label>
@@ -1435,6 +1465,9 @@ footer .foot-logos img{height:28px;width:auto}
           <span class="pi-val mono">HDFC0000516</span>
         </div>
         <div class="pay-upi-strip">
+          <div class="upi-qr-wrap">
+            <img src="assets/qr%20code.jpeg" alt="UPI QR Code" class="upi-qr-img">
+          </div>
           <span class="upi-lbl">PAY VIA UPI</span>
           <span class="upi-val">9674606851@pthdfc</span>
         </div>
@@ -1601,6 +1634,9 @@ footer .foot-logos img{height:28px;width:auto}
         <span class="pi-val mono">HDFC0000516</span>
       </div>
       <div class="pay-upi-strip">
+        <div class="upi-qr-wrap">
+          <img src="assets/qr%20code.jpeg" alt="UPI QR Code" class="upi-qr-img">
+        </div>
         <span class="upi-lbl">PAY VIA UPI</span>
         <span class="upi-val">9674606851@pthdfc</span>
       </div>
@@ -1740,7 +1776,7 @@ footer .foot-logos img{height:28px;width:auto}
 
   /* ===== ENDPOINTS =====
      GOOGLE_SCRIPT_URL: Your deployed Google Apps Script web app URL. */
-  var GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzpv_TufPJvq48wK75bFe0qcgaDBbcb-LGPTfBpu7pUA8rRv5igzLSIvVIbDbFDqO3y/exec";
+  var GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwu1m5HGirs8rgTY5IklqodEFcTCyVQdMbV-6TugP7XGw0p-5yXIKqM7cuJMETGR3qd/exec";
 
   var EVENTS=[
     {name:"MockStreet",min:11,max:12,teamSize:2},
