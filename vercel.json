@@ -1,5 +1,5 @@
 {
-  "$schema": "https://vercel.sh",
+  "$schema": "https://openapi.vercel.sh/vercel.json",
   "redirects": [
     {
       "source": "/register.html",
@@ -11,6 +11,28 @@
       ],
       "destination": "https://finflare.online",
       "permanent": false
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/",
+      "has": [
+        {
+          "type": "host",
+          "value": "register.finflare.online"
+        }
+      ],
+      "destination": "/register.html"
+    },
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "register.finflare.online"
+        }
+      ],
+      "destination": "/:path*"
     }
   ]
 }
