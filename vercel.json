@@ -1,7 +1,7 @@
 {
   "redirects": [
     {
-      "source": "https://www.finflare.online/register.html",
+      "source": "register.html",
       "destination": "https://register.finflare.online",
       "permanent": false
     }
