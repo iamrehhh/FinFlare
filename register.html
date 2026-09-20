@@ -2262,6 +2262,7 @@ footer .foot-logos img{height:28px;width:auto}
 
   function showError(msg){formError.textContent=msg;formError.style.display="block";formError.scrollIntoView({behavior:"smooth",block:"center"})}
   function clearError(){formError.style.display="none";formError.textContent=""}
+  function validMail(v){return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)}
   function cleanPhone(v){
     if(!v) return "";
     var digits = String(v).replace(/\D/g, "");
