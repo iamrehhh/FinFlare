@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
 <title>Inter Round Registration — FinFlare 2026</title>
 <meta name="description" content="FinFlare 2026 Inter-School Grand Finale registration form.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -546,6 +546,82 @@ button:hover{border-color:var(--gold-dim);color:var(--gold)}
   }
   .pay-info-row .pi-val{
     text-align:left;
+  }
+}
+
+/* ======== MOBILE & RELIABILITY OPTIMIZATIONS ======== */
+.btn-copy-upi{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  background:rgba(212,175,55,0.12);
+  border:1px solid rgba(212,175,55,0.35);
+  color:var(--gold);
+  padding:6px 14px;
+  border-radius:999px;
+  font-size:.78rem;
+  font-weight:600;
+  font-family:var(--font-b);
+  cursor:pointer;
+  transition:all .2s ease;
+  margin-top:6px;
+  outline:none;
+}
+.btn-copy-upi:hover, .btn-copy-upi:active{
+  background:var(--gold);
+  color:var(--bg);
+}
+.table-mobile-hint{
+  display:none;
+  align-items:center;
+  gap:8px;
+  font-size:.78rem;
+  color:var(--gold);
+  margin-bottom:10px;
+  background:rgba(212,175,55,0.08);
+  border:1px solid rgba(212,175,55,0.25);
+  padding:8px 14px;
+  border-radius:6px;
+  width:100%;
+  line-height:1.4;
+}
+@media(max-width:768px){
+  .table-mobile-hint{
+    display:flex;
+  }
+  input[type="text"],input[type="email"],input[type="tel"],
+  input[type="number"],select{
+    font-size:16px !important; /* Prevents iOS Safari auto-zoom */
+    min-height:48px;
+  }
+  .btn-gold, .btn-validate, #addRowBtn, .reg-portal-btn, .btn-back{
+    min-height:48px;
+    font-size:.95rem;
+  }
+  .actions{
+    flex-direction:column;
+    align-items:stretch !important;
+    gap:12px;
+  }
+  .actions button, .actions a{
+    width:100%;
+    justify-content:center;
+    text-align:center;
+  }
+  .top-bar{
+    flex-direction:column;
+    align-items:flex-start;
+    gap:10px;
+  }
+  .page{
+    padding:20px 14px 60px;
+  }
+  .upload-area{
+    padding:24px 16px;
+  }
+  .table-wrap{
+    -webkit-overflow-scrolling:touch;
+    scrollbar-width:thin;
   }
 }
 
@@ -1470,6 +1546,10 @@ footer .foot-logos img{height:28px;width:auto}
           </div>
           <span class="upi-lbl">PAY VIA UPI</span>
           <span class="upi-val">9674606851@pthdfc</span>
+          <button type="button" class="btn-copy-upi" onclick="copyUpiId(this)">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+            Copy UPI ID
+          </button>
         </div>
       </div>
 
@@ -1580,6 +1660,11 @@ footer .foot-logos img{height:28px;width:auto}
     </div>
     <div id="excelImportStatus" class="excel-status-banner"></div>
 
+    <div class="table-mobile-hint">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink:0"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      <span>Swipe table horizontally to fill all participant details (Class, Section, Team, WhatsApp, Email)</span>
+    </div>
+
     <div class="table-wrap">
       <table class="parts">
         <thead>
@@ -1639,6 +1724,10 @@ footer .foot-logos img{height:28px;width:auto}
         </div>
         <span class="upi-lbl">PAY VIA UPI</span>
         <span class="upi-val">9674606851@pthdfc</span>
+        <button type="button" class="btn-copy-upi" onclick="copyUpiId(this)">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+          Copy UPI ID
+        </button>
       </div>
     </div>
 
@@ -2173,8 +2262,20 @@ footer .foot-logos img{height:28px;width:auto}
 
   function showError(msg){formError.textContent=msg;formError.style.display="block";formError.scrollIntoView({behavior:"smooth",block:"center"})}
   function clearError(){formError.style.display="none";formError.textContent=""}
-  function validMail(v){return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)}
-  function validPhone(v){return /^[6-9]\d{9}$/.test(v.replace(/[\s+\-]/g,"").replace(/^91/,""))}
+  function cleanPhone(v){
+    if(!v) return "";
+    var digits = String(v).replace(/\D/g, "");
+    if (digits.length === 12 && digits.indexOf("91") === 0) {
+      digits = digits.slice(2);
+    } else if (digits.length === 11 && digits.indexOf("0") === 0) {
+      digits = digits.slice(1);
+    }
+    return digits;
+  }
+  function validPhone(v){
+    var digits = cleanPhone(v);
+    return digits.length >= 10 && digits.length <= 13;
+  }
 
   addBtn.addEventListener("click",function(){
     clearError();
@@ -2437,7 +2538,126 @@ footer .foot-logos img{height:28px;width:auto}
     reader.readAsArrayBuffer(file);
   });
 
-  /* ===== File upload with base64 conversion ===== */
+  /* ===== CLIENT-SIDE IMAGE COMPRESSION (CRITICAL FOR MOBILE RELIABILITY) ===== */
+  function compressImage(file, maxWidth, maxHeight, quality, callback) {
+    if (!file) return;
+    if (!file.type.startsWith("image/")) {
+      var reader = new FileReader();
+      reader.onload = function(e) {
+        callback(e.target.result, file.name, (file.size / 1024).toFixed(1) + " KB", false);
+      };
+      reader.onerror = function() {
+        callback("", file.name, "0 KB", false);
+      };
+      reader.readAsDataURL(file);
+      return;
+    }
+
+    var reader = new FileReader();
+    reader.onload = function(e) {
+      var img = new Image();
+      img.onload = function() {
+        var w = img.width;
+        var h = img.height;
+        if (w > maxWidth || h > maxHeight) {
+          if (w / h > maxWidth / maxHeight) {
+            h = Math.round((h * maxWidth) / w);
+            w = maxWidth;
+          } else {
+            w = Math.round((w * maxHeight) / h);
+            h = maxHeight;
+          }
+        }
+        var canvas = document.createElement("canvas");
+        canvas.width = w;
+        canvas.height = h;
+        var ctx = canvas.getContext("2d");
+        ctx.drawImage(img, 0, 0, w, h);
+
+        var compressed = canvas.toDataURL("image/jpeg", quality);
+        var approxKb = (Math.round((compressed.length * 3) / 4) / 1024).toFixed(1) + " KB";
+        var newName = file.name.replace(/\.[^/.]+$/, "") + ".jpg";
+        callback(compressed, newName, approxKb, true);
+      };
+      img.onerror = function() {
+        callback(e.target.result, file.name, (file.size / 1024).toFixed(1) + " KB", false);
+      };
+      img.src = e.target.result;
+    };
+    reader.onerror = function() {
+      callback("", file.name, "0 KB", false);
+    };
+    reader.readAsDataURL(file);
+  }
+
+  /* ===== COPY UPI HELPER ===== */
+  window.copyUpiId = function(btn) {
+    var upi = "9674606851@pthdfc";
+    function markCopied() {
+      var orig = btn.innerHTML;
+      btn.innerHTML = "&#x2713; Copied!";
+      setTimeout(function() { btn.innerHTML = orig; }, 2000);
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(upi).then(markCopied).catch(function() {
+        fallbackCopy(upi);
+      });
+    } else {
+      fallbackCopy(upi);
+    }
+    function fallbackCopy(text) {
+      var ta = document.createElement("textarea");
+      ta.value = text;
+      document.body.appendChild(ta);
+      ta.select();
+      try { document.execCommand("copy"); markCopied(); } catch(e){}
+      document.body.removeChild(ta);
+    }
+  };
+
+  /* ===== SUBMISSION HELPER WITH TIMEOUT & AUTOMATIC RETRY ===== */
+  function submitRegistrationPayload(payload, onStatus) {
+    if (!GOOGLE_SCRIPT_URL || GOOGLE_SCRIPT_URL.indexOf("YOUR_") === 0) {
+      return Promise.resolve({ ok: true });
+    }
+
+    var maxAttempts = 2;
+    var attempt = 0;
+
+    function doAttempt() {
+      attempt++;
+      if (onStatus) {
+        onStatus(attempt > 1 ? "Retrying upload (attempt " + attempt + ")..." : "Submitting registration...");
+      }
+
+      var controller = (typeof AbortController !== "undefined") ? new AbortController() : null;
+      var timer = controller ? setTimeout(function() { controller.abort(); }, 30000) : null;
+
+      return fetch(GOOGLE_SCRIPT_URL, {
+        method: "POST",
+        mode: "no-cors",
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
+        body: JSON.stringify(payload),
+        signal: controller ? controller.signal : undefined
+      }).then(function() {
+        if (timer) clearTimeout(timer);
+        return { ok: true };
+      }).catch(function(err) {
+        if (timer) clearTimeout(timer);
+        console.warn("Submit attempt " + attempt + " error:", err);
+        if (attempt < maxAttempts) {
+          return new Promise(function(resolve) {
+            setTimeout(resolve, 1500);
+          }).then(doAttempt);
+        }
+        return { ok: false, error: err };
+      });
+    }
+
+    return doAttempt();
+  }
+
+  /* ===== File upload with base64 conversion & mobile compression ===== */
   uploadZone.addEventListener("dragover",function(e){e.preventDefault();uploadZone.classList.add("over")});
   uploadZone.addEventListener("dragleave",function(){uploadZone.classList.remove("over")});
   uploadZone.addEventListener("drop",function(){uploadZone.classList.remove("over")});
@@ -2445,25 +2665,25 @@ footer .foot-logos img{height:28px;width:auto}
   payShot.addEventListener("change",function(){
     if(payShot.files&&payShot.files[0]){
       var f=payShot.files[0];
-      shotName=f.name;
-      prevName.textContent=shotName;
-      prevSize.textContent=(f.size/1024).toFixed(1)+" KB";
+      prevName.textContent=f.name;
+      prevSize.textContent="Optimizing for mobile...";
+      uploadZone.classList.add("over");
 
-      // Read as base64 for Google Drive upload
-      var reader=new FileReader();
-      reader.onload=function(e){
-        shotBase64=e.target.result; // data:image/...;base64,...
-        if(f.type.startsWith("image/")){
-          prevThumb.src=shotBase64;
-          prevThumb.style.display="block";
-        }else{
-          prevThumb.style.display="none";
+      compressImage(f, 1000, 1000, 0.70, function(base64, name, sizeStr, isImg) {
+        uploadZone.classList.remove("over");
+        shotBase64 = base64;
+        shotName = name;
+        prevName.textContent = name;
+        prevSize.textContent = sizeStr + (isImg ? " (optimized)" : "");
+        if (isImg && base64) {
+          prevThumb.src = base64;
+          prevThumb.style.display = "block";
+        } else {
+          prevThumb.style.display = "none";
         }
-      };
-      reader.readAsDataURL(f);
-
-      fileOk.classList.add("show");
-      uploadZone.style.borderColor="var(--ok)";
+        fileOk.classList.add("show");
+        uploadZone.style.borderColor = "var(--ok)";
+      });
     }else{
       shotName="";shotBase64="";
       fileOk.classList.remove("show");
@@ -2489,7 +2709,7 @@ footer .foot-logos img{height:28px;width:auto}
         cls:tr.querySelector(".p-class").value,
         sec:(secEl ? secEl.value.trim() : ""),
         team:teamVal,
-        phone:tr.querySelector(".p-phone").value.trim(),
+        phone:cleanPhone(tr.querySelector(".p-phone").value),
         mail:tr.querySelector(".p-mail").value.trim()
       });
     });
@@ -2560,7 +2780,7 @@ footer .foot-logos img{height:28px;width:auto}
 
     var school=document.getElementById("schoolName").value.trim();
     var coord=document.getElementById("coordName").value.trim();
-    var cPhone=document.getElementById("coordPhone").value.trim();
+    var cPhone=cleanPhone(document.getElementById("coordPhone").value);
     var cMail=document.getElementById("coordMail").value.trim();
     var rows=collectRows();
     var amtPaid=parseFloat(document.getElementById("amtPaid").value)||0;
@@ -2625,27 +2845,15 @@ footer .foot-logos img{height:28px;width:auto}
       })
     };
 
-    // Google Sheets submission
-    var gsOk=false;
-    var gsPromise;
-    if(GOOGLE_SCRIPT_URL&&GOOGLE_SCRIPT_URL.indexOf("YOUR_")===0){
-      gsPromise=Promise.resolve();
-    }else{
-      gsPromise=fetch(GOOGLE_SCRIPT_URL,{
-        method:"POST",
-        mode:"no-cors",
-        headers:{"Content-Type":"application/json"},
-        body:JSON.stringify(payload)
-      }).then(function(){gsOk=true}).catch(function(err){
-        console.warn("GS submit warning:", err);
-        gsOk=true;
-      });
-    }
+    submitRegistrationPayload(payload, function(msg) {
+      submitBtn.innerHTML = '<span class="spin"></span>' + esc(msg);
+    }).then(function(result) {
+      submitBtn.disabled = false;
+      submitBtn.textContent = "Submit Registration";
 
-    gsPromise.finally(function(){
-      submitBtn.disabled=false;submitBtn.textContent="Submit Registration";
-      if(!gsOk&&GOOGLE_SCRIPT_URL&&GOOGLE_SCRIPT_URL.indexOf("YOUR_")!==0){
-        showError("Submission failed — please check your internet connection and try again.");
+      if (!result.ok) {
+        showError("Registration could not be recorded. Please check your internet connection and try again.");
+        return;
       }
 
       /* Populate Receipt Record */
@@ -2834,24 +3042,25 @@ footer .foot-logos img{height:28px;width:auto}
   stuPayShot.addEventListener("change",function(){
     if(stuPayShot.files&&stuPayShot.files[0]){
       var f=stuPayShot.files[0];
-      stuShotName=f.name;
-      stuPrevName.textContent=stuShotName;
-      stuPrevSize.textContent=(f.size/1024).toFixed(1)+" KB";
+      stuPrevName.textContent=f.name;
+      stuPrevSize.textContent="Optimizing for mobile...";
+      stuUploadZone.classList.add("over");
 
-      var reader=new FileReader();
-      reader.onload=function(e){
-        stuShotBase64=e.target.result;
-        if(f.type.startsWith("image/")){
-          stuPrevThumb.src=stuShotBase64;
-          stuPrevThumb.style.display="block";
-        }else{
-          stuPrevThumb.style.display="none";
+      compressImage(f, 1000, 1000, 0.70, function(base64, name, sizeStr, isImg) {
+        stuUploadZone.classList.remove("over");
+        stuShotBase64 = base64;
+        stuShotName = name;
+        stuPrevName.textContent = name;
+        stuPrevSize.textContent = sizeStr + (isImg ? " (optimized)" : "");
+        if (isImg && base64) {
+          stuPrevThumb.src = base64;
+          stuPrevThumb.style.display = "block";
+        } else {
+          stuPrevThumb.style.display = "none";
         }
-      };
-      reader.readAsDataURL(f);
-
-      stuFileOk.classList.add("show");
-      stuUploadZone.style.borderColor="var(--ok)";
+        stuFileOk.classList.add("show");
+        stuUploadZone.style.borderColor = "var(--ok)";
+      });
     }else{
       stuShotName="";stuShotBase64="";
       stuFileOk.classList.remove("show");
@@ -2893,7 +3102,7 @@ footer .foot-logos img{height:28px;width:auto}
     }
 
     var sSec=stuSec.value.trim();
-    var sPhone=stuPhone.value.trim();
+    var sPhone=cleanPhone(stuPhone.value);
     if(!validPhone(sPhone)) return showStuError("Please enter a valid 10-digit WhatsApp number.");
 
     var sMail=stuMail.value.trim();
@@ -2937,24 +3146,15 @@ footer .foot-logos img{height:28px;width:auto}
       }]
     };
 
-    var gsOk=false;
-    var gsPromise;
-    if(GOOGLE_SCRIPT_URL&&GOOGLE_SCRIPT_URL.indexOf("YOUR_")===0){
-      gsPromise=Promise.resolve();
-    }else{
-      gsPromise=fetch(GOOGLE_SCRIPT_URL,{
-        method:"POST",
-        mode:"no-cors",
-        headers:{"Content-Type":"application/json"},
-        body:JSON.stringify(payload)
-      }).then(function(){gsOk=true}).catch(function(){gsOk=false});
-    }
+    submitRegistrationPayload(payload, function(msg) {
+      stuSubmitBtn.innerHTML = '<span class="spin"></span>' + esc(msg);
+    }).then(function(result) {
+      stuSubmitBtn.disabled = false;
+      stuSubmitBtn.textContent = "Submit Registration";
 
-    gsPromise.finally(function(){
-      stuSubmitBtn.disabled=false;
-      stuSubmitBtn.textContent="Submit Registration";
-      if(!gsOk&&GOOGLE_SCRIPT_URL&&GOOGLE_SCRIPT_URL.indexOf("YOUR_")!==0){
-        showStuError("Submission failed \u2014 please check your internet connection and try again.");
+      if (!result.ok) {
+        showStuError("Registration could not be recorded. Please check your internet connection and try again.");
+        return;
       }
 
       /* Populate Receipt Record */

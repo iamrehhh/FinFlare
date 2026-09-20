@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Grand Finale Registration — FinFlare 2026</title>
+<meta name="description" content="Register your finalists for the FinFlare 2026 Grand Finale. Add students, pay Rs 300 each via UPI." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Space+Grotesk:wght@300..700&family=Pinyon+Script&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css" />
+<link rel="icon" href="assets/logo.png" />
+</head>
+<body data-loading="true">
+<div class="tape" aria-hidden="true"></div>
+<div id="loader" aria-hidden="true"><div class="loader-inner glance"><img src="assets/logo.png" alt="FinFlare 2026"><span class="loader-theme">PEOPLE OF THE BAZAAR</span></div></div>
+<header id="nav">
+  <a class="brand" href="index.html"><img src="assets/logo.png" alt="FinFlare 2026"></a>
+  <nav class="nav-links"><a href="index.html">Home</a><a href="about.html">About Us</a><a href="events.html">Events</a><a href="register.html" class="pill active">Register</a></nav>
+  <button id="menuBtn" aria-label="Menu"><span></span><span></span></button>
+</header>
+<div id="menu">
+  <div class="menu-bg-video"><video src="assets/visuals%202.mp4" muted loop playsinline autoplay></video></div>
+  <nav><a href="index.html"><i>01</i>Home</a><a href="about.html"><i>02</i>About Us</a><a href="events.html"><i>03</i>Events</a><a href="register.html"><i>04</i>Register</a></nav>
+  <div class="menu-foot"><div>teamfinflare@gmail.com<br>98363 42812</div><div>Sept — Oct 2026<br>Kolkata</div></div>
+</div>
+<main>
+  <section class="page-hero">
+    <div class="kicker"><span></span> GRAND FINALE · LAST WEEK OF OCT 2026</div>
+    <h1>Add finalists.<br><span class="script">Pay Rs 300 each.</span></h1>
+    <p class="page-sub">Only qualifier finalists. Juniors (FinTales / FinStrokes top 3) are felicitated free — no need to add them here.</p>
+    <div class="wizard-steps" id="stepsBar"><span class="on" data-s="1">1 · School</span><span data-s="2">2 · Finalists</span><span data-s="3">3 · Pay</span><span data-s="4">4 · Done</span></div>
+  </section>
+
+  <section class="panel" style="padding-top:10px">
+    <!-- STEP 1 -->
+    <div class="wstep" data-step="1">
+      <div class="reg-form">
+        <b>YOUR SCHOOL</b>
+        <div class="two"><input id="fSchool" placeholder="School name *" /><input id="fName" placeholder="Coordinator name *" /></div>
+        <div class="two"><input id="fPhone" placeholder="Phone *" inputmode="tel" /><input id="fEmail" placeholder="Email" type="email" /></div>
+        <button class="btn solid light" id="toStep2">CONTINUE →</button>
+        <span class="dim">Qualifier not done yet? <a href="register.html">Register for the free qualifier →</a></span>
+      </div>
+    </div>
+
+    <!-- STEP 2 -->
+    <div class="wstep" data-step="2" hidden>
+      <div class="fee-bar"><span id="feeCount">0 finalists</span><b id="feeTotal">Rs 0</b></div>
+      <div id="rows"></div>
+      <div class="cta-row">
+        <button class="btn ghost" id="addRow">+ ADD STUDENT</button>
+        <button class="btn solid" id="toStep3">REVIEW & PAY →</button>
+      </div>
+      <div class="cta-row"><button class="btn ghost" id="backTo1">← BACK</button></div>
+    </div>
+
+    <!-- STEP 3 -->
+    <div class="wstep" data-step="3" hidden>
+      <div class="pay-grid">
+        <div class="pay-box">
+          <b>AMOUNT DUE</b>
+          <h3 id="payAmt">Rs 0</h3>
+          <p id="payBreak">0 finalists × Rs 300</p>
+          <!-- TODO: replace with FinFlare's real UPI ID before going live -->
+          <div class="upi-row"><span>Pay to UPI ID:</span><b id="upiId">teamfinflare@upi</b><button class="mini" id="copyUpi">COPY</button></div>
+          <a class="btn solid" id="upiBtn" href="#">PAY IN ANY UPI APP →</a>
+          <span class="dim">GPay / PhonePe / Paytm — pay the exact amount, then enter the UTR / ref no. below.</span>
+        </div>
+        <div class="pay-box">
+          <b>CONFIRM PAYMENT</b>
+          <input id="fUtr" placeholder="UTR / transaction ref no. *" />
+          <label class="file">Payment screenshot (optional)<input id="fShot" type="file" accept="image/*" /></label>
+          <img id="shotPrev" alt="" hidden />
+          <button class="btn solid light" id="confirmPay">I'VE PAID — FINISH →</button>
+          <span id="payMsg"></span>
+        </div>
+      </div>
+      <div class="cta-row"><button class="btn ghost" id="backTo2">← BACK</button></div>
+    </div>
+
+    <!-- STEP 4 -->
+    <div class="wstep" data-step="4" hidden>
+      <div class="done-box">
+        <div class="script">you're in!</div>
+        <h2>REGISTRATION <span id="regId">FF26-XXXXXX</span></h2>
+        <p id="doneSum"></p>
+        <div id="doneList"></div>
+        <div class="cta-row">
+          <a class="btn solid" id="waBtn" href="#" target="_blank" rel="noopener">SEND ON WHATSAPP →</a>
+          <a class="btn ghost" href="index.html">BACK TO HOME</a>
+        </div>
+        <span class="dim">Show this ID at the Finale venue with school ID cards. Questions? 98363 42812.</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="kicker light"><span></span> HELP</div>
+    <h2 class="mega">STUCK?<br><span class="script">call us</span></h2>
+    <div class="contact-grid">
+      <div><b>CALL / MAIL</b><a class="big-link" href="tel:+919836342812">98363 42812</a><a class="big-link" href="mailto:teamfinflare@gmail.com">teamfinflare@gmail.com</a></div>
+      <div><b>BACK</b><a class="big-link" href="register.html">← Register options</a><a class="big-link" href="events.html">← Events</a></div>
+      <div><b>NOTE</b><p style="color:#d8cfbd">Payment issues? Pay later is fine — send the finalist list on WhatsApp and settle with our team.</p></div>
+    </div>
+    <div class="foot-base"><span>FINFLARE 2026 · PEOPLE OF THE BAZAAR</span><span>© 2026 FinFlare Fest · Kolkata</span><span><a href="#top">BACK TO TOP</a></span></div>
+  </section>
+</main>
+<script src="app.js"></script>
+<script src="finale.js"></script>
+</body>
+</html>

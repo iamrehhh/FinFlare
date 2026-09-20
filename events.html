@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Events — FinFlare 2026</title>
+<meta name="description" content="11 FinFlare events across Classes 3-12. Simple summary for teachers: who, team size, time needed." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Space+Grotesk:wght@300..700&family=Pinyon+Script&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css" />
+<link rel="icon" href="assets/logo.png" />
+</head>
+<body data-loading="true">
+<div class="tape" aria-hidden="true"></div>
+<div id="loader" aria-hidden="true"><div class="loader-inner glance"><img src="assets/logo.png" alt="FinFlare 2026"><span class="loader-theme">PEOPLE OF THE BAZAAR</span></div></div>
+<header id="nav">
+  <a class="brand" href="index.html"><img src="assets/logo.png" alt="FinFlare 2026"></a>
+  <nav class="nav-links"><a href="index.html">Home</a><a href="about.html">About Us</a><a href="events.html" class="active">Events</a><a href="register.html" class="pill">Register</a></nav>
+  <button id="menuBtn" aria-label="Menu"><span></span><span></span></button>
+</header>
+<div id="menu">
+  <div class="menu-bg-video"><video src="assets/visuals%202.mp4" muted loop playsinline autoplay></video></div>
+  <nav><a href="index.html"><i>01</i>Home</a><a href="about.html"><i>02</i>About Us</a><a href="events.html"><i>03</i>Events</a><a href="register.html"><i>04</i>Register</a></nav>
+  <div class="menu-foot"><div>teamfinflare@gmail.com<br>98363 42812</div><div>Sept — Oct 2026<br>Kolkata</div></div>
+</div>
+<main>
+  <section class="page-hero">
+    <div class="kicker"><span></span> EVENTS</div>
+    <h1>11 events.<br><span class="script">4 age groups.</span></h1>
+    <p class="page-sub">Simple summary for teachers. Tap any event for a 30-second brief. Full rulebook shared after registration.</p>
+    <div class="filters"><button class="active" data-filter="all">ALL (11)</button><button data-filter="11-12">CLASSES 11–12</button><button data-filter="9-10">CLASSES 9–10</button><button data-filter="6-8">CLASSES 6–8</button><button data-filter="3-5">CLASSES 3–5</button></div>
+  </section>
+
+  <section class="panel" style="padding-top:10px">
+    <div id="g1112" class="group-label">CLASSES 11–12 · SENIORS</div>
+    <div id="eventList"></div>
+    <p class="hint">Tap a row for: what students do · team size · time · what to bring</p>
+    <div class="group-label" id="g910">CLASSES 9–10 · MIDDLE-SENIOR</div>
+    <div id="eventList2"></div>
+    <div class="group-label" id="g68">CLASSES 6–8 · MIDDLE</div>
+    <div id="eventList3"></div>
+    <div class="group-label" id="g35">CLASSES 3–5 · JUNIORS (IN-SCHOOL ONLY)</div>
+    <div id="eventList4"></div>
+    <div class="note-box reveal">Junior events (FinTales, FinStrokes) happen only at your school. Top 3 per school win; overall top 3 are felicitated at the Finale. No travel needed.</div>
+    <div class="cta-row reveal"><a href="register.html" class="btn solid">REGISTER FOR QUALIFIER (FREE) →</a></div>
+  </section>
+
+  <section id="contact">
+    <div class="kicker light"><span></span> QUESTIONS?</div>
+    <h2 class="mega">ASK<br><span class="script">us anything</span></h2>
+    <div class="contact-grid">
+      <div><b>CALL / MAIL</b><a class="big-link" href="tel:+919836342812">98363 42812</a><a class="big-link" href="mailto:teamfinflare@gmail.com">teamfinflare@gmail.com</a></div>
+      <div><b>NEXT</b><a class="big-link" href="register.html">Register →</a><a class="big-link" href="about.html">About us →</a></div>
+      <div><b>NOTE</b><p style="color:#d8cfbd">Need the full rulebook? Mail us and we'll send the detailed PDF for your chosen events.</p></div>
+    </div>
+    <div class="foot-base"><span>FINFLARE 2026</span><span><a href="index.html">Home</a> · <a href="about.html">About</a> · <a href="register.html">Register</a></span><span><a href="#top">BACK TO TOP</a></span></div>
+  </section>
+</main>
+<div id="modal" aria-hidden="true"><div class="modal-card"><button id="modalClose" aria-label="Close">X</button><div class="modal-media"><img id="mImg" src="" alt="" /><span id="mClass"></span></div><div class="modal-body"><div class="script" id="mScript"></div><h3 id="mTitle"></h3><p id="mDesc"></p><div class="m-meta"><div><b>WHO</b><span id="mElig"></span></div><div><b>TEAM</b><span id="mTeam"></span></div><div><b>TIME</b><span id="mWin"></span></div></div><b class="m-h">WHAT MATTERS</b><ul id="mJudge"></ul><b class="m-h">GOOD TO KNOW</b><ul id="mRules"></ul><a class="btn solid" href="register.html" id="mCta">REGISTER FOR THIS</a></div></div></div>
+<script src="app.js"></script>
+</body>
+</html>

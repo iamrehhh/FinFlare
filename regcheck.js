@@ -103,7 +103,20 @@
   function clearError() { formError.style.display = "none"; formError.textContent = ""; }
 
   function validMail(v) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v); }
-  function validPhone(v) { return /^[6-9]\d{9}$/.test(v.replace(/[\s+\-]/g, "").replace(/^91/, "")); }
+  function cleanPhone(v) {
+    if (!v) return "";
+    var digits = String(v).replace(/\D/g, "");
+    if (digits.length === 12 && digits.indexOf("91") === 0) {
+      digits = digits.slice(2);
+    } else if (digits.length === 11 && digits.indexOf("0") === 0) {
+      digits = digits.slice(1);
+    }
+    return digits;
+  }
+  function validPhone(v) {
+    var digits = cleanPhone(v);
+    return digits.length >= 10 && digits.length <= 13;
+  }
 
   addBtn.addEventListener("click", function () { clearError(); addRow(); });
 
@@ -132,7 +145,7 @@
         team: tr.querySelector(".p-team").value.trim(),
         name: tr.querySelector(".p-name").value.trim(),
         cls: tr.querySelector(".p-class").value,
-        phone: tr.querySelector(".p-phone").value.trim(),
+        phone: cleanPhone(tr.querySelector(".p-phone").value),
         mail: tr.querySelector(".p-mail").value.trim()
       });
     });
@@ -145,7 +158,7 @@
 
     var school = document.getElementById("schoolName").value.trim();
     var coord = document.getElementById("coordName").value.trim();
-    var cPhone = document.getElementById("coordPhone").value.trim();
+    var cPhone = cleanPhone(document.getElementById("coordPhone").value);
     var cMail = document.getElementById("coordMail").value.trim();
     var fee = FEE;
     var rows = collectRows();

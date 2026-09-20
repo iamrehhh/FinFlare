@@ -202,37 +202,54 @@ function doPost(e) {
     }
 
     if (isIndividual) {
-      // ──── ROUTE TO SEPARATE 'Individual Registrations' SHEET ────
-      participants.forEach(function(p) {
-        indivSheet.appendRow([
-          timestamp,
-          (p.school || school),
-          p.event,
-          p.name,
-          p.cls,
-          (p.sec || ""),
-          p.team,
-          p.phone,
-          p.mail,
-          amtPaid,
-          txnRef,
-          screenshotLink
-        ]);
-      });
+      // ──── FAST BATCH WRITE TO 'Individual Registrations' SHEET ────
+      if (participants.length > 0) {
+        var indivRows = participants.map(function(p) {
+          return [
+            timestamp,
+            (p.school || school),
+            p.event,
+            p.name,
+            p.cls,
+            (p.sec || ""),
+            p.team,
+            p.phone,
+            p.mail,
+            amtPaid,
+            txnRef,
+            screenshotLink
+          ];
+        });
+        var lastRow = indivSheet.getLastRow();
+        indivSheet.getRange(lastRow + 1, 1, indivRows.length, indivRows[0].length).setValues(indivRows);
+      }
     } else {
-      // ──── ROUTE TO 'Registrations' & 'Participants' SHEETS ────
+      // ──── FAST BATCH WRITE TO 'Registrations' & 'Participants' SHEETS ────
       regSheet.appendRow([
         timestamp, school, coord, phone, email,
         totalPart, amtPaid, txnRef, screenshotLink,
         studentEmails
       ]);
 
-      participants.forEach(function(p) {
-        partSheet.appendRow([
-          (p.school || school), p.event, p.name, p.cls, (p.sec || ""), p.team, p.phone, p.mail
-        ]);
-      });
+      if (participants.length > 0) {
+        var partRows = participants.map(function(p) {
+          return [
+            (p.school || school),
+            p.event,
+            p.name,
+            p.cls,
+            (p.sec || ""),
+            p.team,
+            p.phone,
+            p.mail
+          ];
+        });
+        var lastRow = partSheet.getLastRow();
+        partSheet.getRange(lastRow + 1, 1, partRows.length, partRows[0].length).setValues(partRows);
+      }
     }
+
+    SpreadsheetApp.flush(); // Commit all pending changes immediately
 
     // Return success
     return ContentService.createTextOutput(
@@ -255,22 +272,38 @@ function doGet(e) {
 
 
 // ═══════════════════════════════════════════════════════════════
-// 3. SAVE SCREENSHOT TO GOOGLE DRIVE
+// 3. SAVE SCREENSHOT TO GOOGLE DRIVE (CACHED FOLDER LOOKUP)
 // ═══════════════════════════════════════════════════════════════
+
+function getScreenshotFolder() {
+  var props = PropertiesService.getScriptProperties();
+  var folderId = props.getProperty("SCREENSHOT_FOLDER_ID");
+  if (folderId) {
+    try {
+      return DriveApp.getFolderById(folderId);
+    } catch (e) {}
+  }
+  var folders = DriveApp.getFoldersByName(SCREENSHOT_FOLDER_NAME);
+  var folder = folders.hasNext() ? folders.next() : DriveApp.createFolder(SCREENSHOT_FOLDER_NAME);
+  try {
+    props.setProperty("SCREENSHOT_FOLDER_ID", folder.getId());
+  } catch (e) {}
+  return folder;
+}
 
 function saveScreenshot(base64Data, fileName, schoolName) {
   try {
     // Remove data URL prefix if present (e.g., "data:image/png;base64,")
     var base64Clean = base64Data.replace(/^data:[^;]+;base64,/, "");
     var cleanSchool = (schoolName || "School").replace(/[^a-zA-Z0-9]/g, "_");
+    var isPdf = fileName && fileName.toLowerCase().indexOf(".pdf") > 0;
     var blob = Utilities.newBlob(
       Utilities.base64Decode(base64Clean),
-      MimeType.PNG,
+      isPdf ? MimeType.PDF : MimeType.JPEG,
       cleanSchool + "_" + fileName
     );
 
-    var folders = DriveApp.getFoldersByName(SCREENSHOT_FOLDER_NAME);
-    var folder = folders.hasNext() ? folders.next() : DriveApp.createFolder(SCREENSHOT_FOLDER_NAME);
+    var folder = getScreenshotFolder();
     var file = folder.createFile(blob);
     file.setSharing(DriveApp.Access.ANYONE_WITH_LINK, DriveApp.Permission.VIEW);
 
