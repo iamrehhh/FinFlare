@@ -1,0 +1,9 @@
+{
+  "redirects": [
+    {
+      "source": "/register.html <path>",
+      "destination": "https://register.finflare.online",
+      "permanent": false
+    }
+  ]
+}

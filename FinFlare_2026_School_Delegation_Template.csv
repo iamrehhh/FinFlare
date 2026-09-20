@@ -1,0 +1,19 @@
+Event,Participant Name,Class,Section,Team Name (Enter 'NA' for Individual Events),Phone (WhatsApp),Student Email
+MockStreet,Aarav Mehta,12,A,Bulls & Bears,9830012345,aarav@example.com
+MockStreet,Sneha Roy,12,A,Bulls & Bears,9830012346,sneha@example.com
+PowerPitch,Rohan Sen,11,B,VentureX,9830012347,rohan@example.com
+PowerPitch,Diya Patel,11,B,VentureX,9830012348,diya@example.com
+PowerPitch,Arjun Nair,11,B,VentureX,9830012349,arjun@example.com
+BoardroomBattle,Pooja Das,12,C,NA,9830012350,pooja@example.com
+CaseCipher,Kabir Ghosh,10,A,CipherSquad,9830012351,kabir@example.com
+CaseCipher,Ananya Sen,10,A,CipherSquad,9830012352,ananya@example.com
+BrandCraft,Dev Sharma,9,B,AdMinds,9830012353,dev@example.com
+BrandCraft,Ishaan Bose,9,B,AdMinds,9830012354,ishaan@example.com
+BrandCraft,Tanya Sen,9,B,AdMinds,9830012355,tanya@example.com
+BudgetBreaker,Meera Iyer,10,C,FiscalForce,9830012356,meera@example.com
+BudgetBreaker,Rahul Verma,10,C,FiscalForce,9830012357,rahul@example.com
+QuizNomics,Aadit Dey,8,A,EconWhiz,9830012358,aadit@example.com
+QuizNomics,Samir Paul,8,A,EconWhiz,9830012359,samir@example.com
+MonopolyMasters,Riya Banik,7,B,NA,9830012360,riya@example.com
+EchoSpark,Tanvi Roy,8,C,Sparks,9830012361,tanvi@example.com
+EchoSpark,Kunal Jain,8,C,Sparks,9830012362,kunal@example.com
