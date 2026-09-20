@@ -1,9 +1,10 @@
 {
+  "$schema": "https://vercel.sh",
   "redirects": [
     {
       "source": "/register.html",
       "destination": "https://register.finflare.online",
-      "permanent": true
+      "permanent": false
     }
   ]
 }
