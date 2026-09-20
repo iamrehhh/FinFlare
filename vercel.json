@@ -3,7 +3,7 @@
     {
       "source": "/register.html",
       "destination": "https://register.finflare.online",
-      "permanent": false
+      "permanent": true
     }
   ]
 }
