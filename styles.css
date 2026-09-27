@@ -367,6 +367,80 @@ body:not([data-loading="true"]) #loader {
   filter: drop-shadow(0 4px 16px rgba(0, 0, 0, 0.55));
 }
 
+.esteem-logo {
+  height: 52px;
+  width: auto;
+  max-width: min(340px, 70vw);
+  object-fit: contain;
+  background: none;
+  margin-top: 14px;
+  filter: drop-shadow(0 4px 16px rgba(0, 0, 0, 0.55));
+}
+
+.esteem-label {
+  font-family: var(--font-b);
+  font-size: 0.72rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-top: 6px;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.6);
+}
+
+/* esteem partner strip — first scroll section below hero */
+.partner-strip {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 12px;
+  padding: 34px 24px 32px;
+  background: radial-gradient(55% 90% at 50% 50%, rgba(212, 175, 55, 0.07), transparent 70%), var(--bg2);
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+.partner-kicker {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-family: var(--font-b);
+  font-size: 0.68rem;
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+.partner-kicker::before,
+.partner-kicker::after {
+  content: "";
+  display: block;
+  width: clamp(36px, 7vw, 72px);
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold-dim));
+}
+
+.partner-kicker::after {
+  background: linear-gradient(90deg, var(--gold-dim), transparent);
+}
+
+.partner-logo {
+  height: clamp(40px, 5.5vw, 58px);
+  width: auto;
+  max-width: min(300px, 70vw);
+  object-fit: contain;
+  background: var(--cream);
+  padding: 10px 24px;
+  border-radius: 10px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.partner-name {
+  font-family: var(--font-s);
+  font-size: clamp(0.95rem, 2vw, 1.2rem);
+  color: var(--cream);
+}
+
 .finale-title {
   font-family: var(--font-s);
   font-weight: 700;
